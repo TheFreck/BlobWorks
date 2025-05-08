@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/BlobWorks/BlobWorks.Server/obj
+/BlobWorks/.vs/BlobWorks/DesignTimeBuild
+/BlobWorks/.vs/BlobWorks/FileContentIndex
+/BlobWorks/.vs/BlobWorks/v17
+/BlobWorks/Blob.Specs/obj
+/BlobWorks/blobworks.client/obj/Debug

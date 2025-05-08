@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobWorks.Server", "BlobWorks.Server\BlobWorks.Server.csproj", "{5F6C9316-9016-47E0-ACBC-7E3108110844}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "blobworks.client", "blobworks.client\blobworks.client.esproj", "{24E91F43-00E1-4873-8D18-D57F6F760556}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blob.Specs", "Blob.Specs\Blob.Specs.csproj", "{8BE1404A-6FDF-4F61-8289-745C11530A2C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F6C9316-9016-47E0-ACBC-7E3108110844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F6C9316-9016-47E0-ACBC-7E3108110844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F6C9316-9016-47E0-ACBC-7E3108110844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F6C9316-9016-47E0-ACBC-7E3108110844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24E91F43-00E1-4873-8D18-D57F6F760556}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{8BE1404A-6FDF-4F61-8289-745C11530A2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BE1404A-6FDF-4F61-8289-745C11530A2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BE1404A-6FDF-4F61-8289-745C11530A2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BE1404A-6FDF-4F61-8289-745C11530A2C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

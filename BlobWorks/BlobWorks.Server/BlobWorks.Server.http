@@ -1,0 +1,6 @@
+@BlobWorks.Server_HostAddress = http://localhost:5245
+
+GET {{BlobWorks.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
