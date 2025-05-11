@@ -2,35 +2,52 @@ import React, { useContext, useEffect } from "react";
 import Context from "../../Context";
 
 export const Element = ({type}) => {
-    const {elementsEnum} = useContext(Context);
-
     useEffect(() => {
-        console.log("type: ", type);
-    })
+        // console.log("type: ", type);
+    },[]);
+
     return (
         <>
-            <rect
+            <polygon
+                points={`
+                    ${type.pos[0]-type.r/2},${type.pos[1]-type.r/2} 
+                    ${type.pos[0]-type.r/2},${type.pos[1]+type.r/2} 
+                    ${type.pos[0]+type.r/2},${type.pos[1]+type.r/2}
+                    ${type.pos[0]+type.r/2},${type.pos[1]-type.r/2} 
+                `}
                 data-testid="element"
                 data-elementid={"element-" + type.eId}
-                x={type.xPos}
-                y={type.yPos}
-                width={type.r}
-                height={type.r}
                 stroke={type.border}
                 fill={type.color}
-                stroke-width={.1}
+                strokeWidth={.1}
             />
             <text
-                x={type.xPos+type.r*.2}
-                y={type.yPos+type.r*.8}
+                x={type.pos[0]+type.r/10}
+                y={type.pos[1]-type.r/10}
                 stroke={type.border}
-                stroke-width={.1}
+                strokeWidth={.1}
                 style={{
-                    font: `bold ${.05*type.r}em sans-serif`
+                    font: `bold ${.025*type.r}em sans-serif`
                 }}
             >
                 {type.letter}
             </text>
+            {
+                type.north && 
+                <Element type={type.north} />
+            }
+            {
+                type.south &&
+                <Element type={type.south} />
+            }
+            {
+                type.east &&
+                <Element type={type.east} />
+            }
+            {
+                type.west &&
+                <Element type={type.west} />
+            }
         </>
     );
 }

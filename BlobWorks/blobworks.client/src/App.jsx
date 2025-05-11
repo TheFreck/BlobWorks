@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Context from './Context';
 import Environment from './components/environment/environment';
+import LoopContainer from './components/loopContainer';
 
 function App() {
 
@@ -15,10 +16,6 @@ function App() {
 
     const elementsRef = useRef();
 
-    const init = () => {
-        
-    }
-
     return(
         <>
             <Context.Provider
@@ -27,10 +24,7 @@ function App() {
 
                 }}
             >
-                <Environment
-                >
-
-                </Environment>
+                <LoopContainer />
             </Context.Provider>
         </>
     )
