@@ -26,32 +26,32 @@ export const Environment = ({loopRef}) => {
                     <Element type={e} key={i} />)
                 }
                 <rect
-                    x={0}
-                    y={0}
+                    x={-.5}
+                    y={-.5}
                     width={1}
                     height={1}
                     stroke='orange'
                     fill='orange'
                 />
                 <rect
-                    x={100}
-                    y={0}
+                    x={99.5}
+                    y={-.5}
                     width={1}
                     height={1}
                     stroke='orange'
                     fill='orange'
                 />
                 <rect
-                    x={0}
-                    y={100}
+                    x={-.5}
+                    y={99.5}
                     width={1}
                     height={1}
                     stroke='orange'
                     fill='orange'
                 />
                 <rect
-                    x={100}
-                    y={100}
+                    x={99.5}
+                    y={99.5}
                     width={1}
                     height={1}
                     stroke='orange'

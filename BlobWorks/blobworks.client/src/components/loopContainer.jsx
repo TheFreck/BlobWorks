@@ -11,7 +11,7 @@ export const LoopContainer = () => {
     },[]);
 
     const init = () => {
-        createElements(16, 5, elements => {
+        createElements(5, 10, elements => {
             loopRef.current = {
                 loopFrame: 0,
                 intId: 0,

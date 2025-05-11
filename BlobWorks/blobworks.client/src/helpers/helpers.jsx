@@ -11,7 +11,7 @@ const elementsEnum = {
 
 export const createElements = (n, r, cb) => {
     let elements = [];
-    for(var i=0; i<n; i++){
+    for(var i=1; i<=n; i++){
         let coords = getCoords(r);
         let eType = Math.random() > .2 ? 1 : 0;
         elements.push({
@@ -23,10 +23,7 @@ export const createElements = (n, r, cb) => {
             pos: coords,
             vel: [(Math.random()*2-1)*.1,(Math.random()*2-1)*.1],
             r: r,
-            north: null,
-            south: null,
-            east: null,
-            west: null
+            neighbors: [null,null,null,null]
         });
     }
     cb(elements);
@@ -79,15 +76,9 @@ export const calculateMovement = (elements, cb) => {
                     cb[i].vel[0]+cb[i].pos[0]+xPos,
                     cb[i].vel[1]+cb[i].pos[1]+yPos
                 ],
-                vel: [
-                    Math.random()*2-1,
-                    Math.random()*2-1
-                ],
+                vel: cb[i].vel,
                 r: cb[i].r,
-                north: cb[i].north,
-                south: cb[i].south,
-                east: cb[i].east,
-                west: cb[i].west
+                neighbors: cb[i].neighbors
             });
         }
     });
@@ -113,45 +104,95 @@ export const checkWalls = (pos,r) => {
 
 const checkCollisions = (elements, cb) => {
     let r = elements[0].r;
+    elements[0].vel = [Math.random()*2-1,Math.random()*2-1];
     for (let i = 0; i < elements.length; i++) {
+        let [xPos,yPos] = checkWalls(elements[i].pos,r);
+        elements[i].pos[0] += xPos;
+        elements[i].pos[1] += yPos;
         for (let j = i + 1; j < elements.length; j++) {
-            if(Math.abs(elements[i].pos[0] - elements[j].pos[0]) <= 2*r &&
-                Math.abs(elements[i].pos[1] - elements[j].pos[1]) <= 2*r
+            if(elements[i].neighbors.includes(elements[j].eId)){
+                elements[j].vel = elements[i].vel;
+                let neighbor = elements[i].neighbors.indexOf(elements[j].eId);
+                switch(neighbor){
+                    case 0:
+                        elements[j].pos = [elements[i].pos[0],elements[i].pos[1]+r];
+                        break;
+                    case 1: 
+                        elements[j].pos = [elements[i].pos[0]+r,elements[i].pos[1]];
+                        break;
+                    case 2:
+                        elements[j].pos = [elements[i].pos[0],elements[i].pos[1]-r];
+                        break;
+                    case 3:
+                        elements[j].pos = [elements[i].pos[0]-r,elements[i].pos[1]];
+                        break;
+                }
+                break;
+            }
+            else{
+                elements[j].vel = [Math.random()*2-1,Math.random()*2-1];
+            }
+            if(Math.abs(elements[i].pos[0] - elements[j].pos[0]) <= r &&
+                Math.abs(elements[i].pos[1] - elements[j].pos[1]) <= r
             ){
                 let mTop = elements[i].pos[1]-elements[j].pos[1];
                 let mBot = elements[i].pos[0]-elements[j].pos[0];
                 if(mTop > 0){
                     if(mTop/mBot > 1 || mTop/mBot < -1){
-                        elements[i].south = elements[j].eId;
-                        elements[j].north = elements[i].eId;
-                        let adjustment = (elements[j].pos[0]-elements[i].pos[0])/2;
-                        elements[i].pos[0] += adjustment;
-                        elements[j].pos[0] -= adjustment;
+                        if(elements[i].neighbors[2] === null && elements[j].neighbors[0] === null){
+                            elements[i].neighbors[2] = elements[j].eId;
+                            elements[j].neighbors[0] = elements[i].eId;
+                            let ewAdjustment = (elements[j].pos[0]-elements[i].pos[0])/2;
+                            let nsAdjustment = (elements[j].pos[1]-elements[i].pos[1]-r)/2;
+                            elements[i].pos[0] += ewAdjustment;
+                            elements[j].pos[0] -= ewAdjustment;
+                            elements[i].pos[1] += nsAdjustment;
+                            elements[j].pos[1] -= nsAdjustment;
+                            elements[j].vel = elements[i].vel;
+                        }
                     }
                     else 
                     if(mTop/mBot < 1 && mTop/mBot > -1){
-                        elements[i].west = elements[j].eId;
-                        elements[j].east = elements[i].eId;
-                        let adjustment = (elements[j].pos[1]-elements[i].pos[1])/2;
-                        elements[i].pos[1] += adjustment;
-                        elements[j].pos[1] -= adjustment;
+                        if(elements[i].neighbors[3] === null && elements[j].neighbors[1] === null){
+                            elements[i].neighbors[3] = elements[j].eId;
+                            elements[j].neighbors[1] = elements[i].eId;
+                            let nsAdjustment = (elements[j].pos[1]-elements[i].pos[1])/2;
+                            let ewAdjustment = (elements[j].pos[0]-elements[i].pos[0]-r)/2;
+                            elements[i].pos[1] += nsAdjustment;
+                            elements[j].pos[1] -= nsAdjustment;
+                            elements[i].pos[0] += ewAdjustment;
+                            elements[j].pos[0] -= ewAdjustment;
+                            elements[j].vel = elements[i].vel;
+                        }
                     }
                 }
                 else {
                     if(mTop/mBot > 1 || mTop/mBot < -1){
-                        elements[i].north = elements[j].eId;
-                        elements[j].south = elements[i].eId;
-                        let adjustment = (elements[j].pos[0]-elements[i].pos[0])/2;
-                        elements[i].pos[0] += adjustment;
-                        elements[j].pos[0] -= adjustment;
+                        if(elements[i].neighbors[0] === null && elements[j].neighbors[2] === null){
+                            elements[i].neighbors[0] = elements[j].eId;
+                            elements[j].neighbors[2] = elements[i].eId;
+                            let ewAdjustment = (elements[j].pos[0]-elements[i].pos[0])/2;
+                            let nsAdjustment = (elements[j].pos[1]-elements[i].pos[1]-r)/2;
+                            elements[i].pos[0] += ewAdjustment;
+                            elements[j].pos[0] -= ewAdjustment;
+                            elements[i].pos[1] += nsAdjustment;
+                            elements[j].pos[1] -= nsAdjustment;
+                            elements[j].vel = elements[i].vel;
+                        }
                     }
                     else 
                     if(mTop/mBot < 1 && mTop/mBot > -1){
-                        elements[i].east = elements[j].eId;
-                        elements[j].west = elements[i].eId;
-                        let adjustment = (elements[j].pos[1]-elements[i].pos[1])/2;
-                        elements[i].pos[1] += adjustment;
-                        elements[j].pos[1] -= adjustment;
+                        if(elements[i].neighbors[1] === null && elements[j].neighbors[3] === null){
+                            elements[i].neighbors[1] = elements[j].eId;
+                            elements[j].neighbors[3] = elements[i].eId;
+                            let nsAdjustment = (elements[j].pos[1]-elements[i].pos[1])/2;
+                            let ewAdjustment = (elements[j].pos[0]-elements[i].pos[0]-r)/2;
+                            elements[i].pos[1] += nsAdjustment;
+                            elements[j].pos[1] -= nsAdjustment;
+                            elements[i].pos[0] += ewAdjustment;
+                            elements[j].pos[0] -= ewAdjustment;
+                            elements[j].vel = elements[i].vel;
+                        }
                     }
                 }
             }
@@ -160,7 +201,16 @@ const checkCollisions = (elements, cb) => {
     cb(elements);
 }
 
+export const callthisback = (input,cb) => {
+    for(let inp of input){
+        inp[0]+1;
+        inp[1]-1;
+    }
+    cb(input);
+}
+
 export default {
     createElements,
-    calculateMovement
+    calculateMovement,
+    callthisback
 }
